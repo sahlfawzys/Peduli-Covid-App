@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "287678089961",
+    "project_id": "pedulicovid-9a2c1",
+    "storage_bucket": "pedulicovid-9a2c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287678089961:android:5d5ff39fccff8f73663e78",
+        "android_client_info": {
+          "package_name": "com.example.peduli_covid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287678089961-eq19p6hpbpf5bhcqbla01a03vqt3c8ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwKvWc65O1q9hiAuxTA_zZx-UOJffNCu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287678089961-eq19p6hpbpf5bhcqbla01a03vqt3c8ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
