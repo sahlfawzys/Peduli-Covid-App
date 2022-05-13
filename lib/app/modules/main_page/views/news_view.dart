@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,32 +13,33 @@ class NewsView extends GetView<NewsController> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: controller.getNews(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return _NewsViewWidget();
+          }
+          return FutureBuilder(
+            builder: (context, snapshot) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        });
+  }
+
+  Widget _NewsViewWidget() {
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BigText(text: 'KESEHATAN'),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 200,
-              child: PageView.builder(
-                controller: PageController(viewportFraction: 0.85),
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => _PageViewWidget(index),
-              ),
-            ),
-            const SizedBox(height: 20),
             BigText(text: 'BERITA HARI INI'),
             const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
                 itemCount: 8,
-                itemBuilder: (context, index) => _ListTileWidget(index),
+                itemBuilder: (context, index) => _PageViewWidget(index),
               ),
             )
           ],
@@ -46,56 +49,81 @@ class NewsView extends GetView<NewsController> {
   }
 
   Widget _PageViewWidget(int index) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: AssetImage('assets/images/news_sehat.jpeg'),
-          fit: BoxFit.fill,
+    return Column(
+      children: [
+        Container(
+          height: 200,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(15),
+            ),
+            image: DecorationImage(
+                image: NetworkImage(
+                    controller.topNews.articles![index].urlToImage!),
+                fit: BoxFit.fill),
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SmallText(
-            text: 'health.detik.com - $index',
-            size: 11,
-            color: Colors.grey.shade700,
+        Container(
+          width: double.maxFinite,
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(15),
+            ),
+            color: Colors.grey[300],
           ),
-          BigText(
-            text: '7 buah untuk covid, konsumsi',
-            size: 16,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            overFlow: TextOverflow.ellipsis,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SmallText(
+                text: controller.topNews.articles![index].source!.name!,
+                size: 11,
+                color: Colors.grey.shade700,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                controller.topNews.articles![index].title!,
+                maxLines: 3,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 20,
+        )
+      ],
     );
   }
 
-  Widget _ListTileWidget(int index) {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(10),
-      title: SmallText(
-        text: 'cnbcindonesia - $index',
-        size: 11,
-        color: Colors.grey,
-      ),
-      subtitle:
-          SmallText(text: 'Menurun, kasus covid di RI sebanyak 3.049 hari ini'),
-      leading: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Image.asset(
-          'assets/images/news.jpg',
-          fit: BoxFit.fill,
-        ),
-      ),
-    );
-  }
+  // Widget _ListTileWidget(int index) {
+  //   return ListTile(
+  //     contentPadding: const EdgeInsets.all(10),
+  //     title: SmallText(
+  //       text: controller.topNews.articles![index].source!.name!,
+  //       size: 11,
+  //       color: Colors.grey,
+  //     ),
+  //     subtitle: SmallText(text: controller.topNews.articles![index].title!),
+  //     leading: Container(
+  //       height: 50,
+  //       width: 100,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       child: Image.network(
+  //         controller.topNews.articles![index].urlToImage!,
+  //         fit: BoxFit.fill,
+  //       ),
+  //     ),
+  //   );
+  // }
 }

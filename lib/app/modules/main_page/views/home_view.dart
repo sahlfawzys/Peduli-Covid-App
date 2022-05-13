@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:peduli_covid/app/data/models/covid_model_model.dart';
 import 'package:peduli_covid/utils/colors.dart';
 import 'package:peduli_covid/widgets/big_text.dart';
 import 'package:peduli_covid/widgets/box_container.dart';
@@ -14,24 +11,10 @@ import 'package:peduli_covid/widgets/ui_icons_icons.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  final String url =
-      'https://covid19-public.digitalservice.id/api/v1//rekapitulasi/jabar';
-  Future getData() async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      print('Data imported');
-
-      controller.covid = CovidModel.fromJson(
-          json.decode(response.body) as Map<String, dynamic>);
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getData(),
+        future: controller.getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return _HomeViewWidget();
@@ -44,7 +27,7 @@ class HomeView extends GetView<HomeController> {
         });
   }
 
-  SafeArea _HomeViewWidget() {
+  Widget _HomeViewWidget() {
     return SafeArea(
       child: Container(
         color: AppColors.mainColor60,
