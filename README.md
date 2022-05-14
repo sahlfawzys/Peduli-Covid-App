@@ -12,7 +12,6 @@ This project is a starting point for a Flutter application.
 - Firebase Auth
 - [API Pikobar](https://covid19-public.digitalservice.id/api/v1//rekapitulasi/jabar)
 - [News API](https://newsapi.org)
-https://newsapi.org
 
 ## Page
 - Splashscreen
