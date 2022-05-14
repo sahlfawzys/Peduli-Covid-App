@@ -11,11 +11,13 @@ This project is a starting point for a Flutter application.
 - GetX State Management
 - Firebase Auth
 - [API Pikobar](https://covid19-public.digitalservice.id/api/v1//rekapitulasi/jabar)
+- [News API](https://newsapi.org)
+https://newsapi.org
 
 ## Page
 - Splashscreen
 - Login
 - Register
 - Home (API Pikobar)
-- News (Dummy data)
+- News (News API)
 - About me
